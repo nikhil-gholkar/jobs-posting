@@ -19,6 +19,13 @@
   <input name="experience" placeholder="Experience" required />
   <input name="applyLink" placeholder="Apply Link" required />
   <button type="submit">Post to Telegram</button>
+  <select name="template" id="template">
+  <option value="template1">Template 1 (Dark)</option>
+  <option value="template2">Template 2 (Light)</option>
+</select>
+
+<input type="file" id="logoInput" accept="image/*" />
+
 </form>
 
 <p id="status"></p>
@@ -26,7 +33,8 @@
 <hr />
 
 <!-- Image Card -->
-<div id="jobCard" style="display:none">
+<div id="jobCard" class="template1">
+  <img id="logoPreview" />
   <h1 id="imgTitle"></h1>
   <h3 id="imgCompany"></h3>
   <p id="imgLocation"></p>
@@ -35,6 +43,8 @@
 </div>
 
 <button id="downloadBtn" style="display:none">Download Image</button>
+<button id="copyCaptionBtn" style="display:none">Copy Caption</button>
+
 
 
 <script src="script.js"></script>

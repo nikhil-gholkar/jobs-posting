@@ -4,7 +4,7 @@ document.getElementById("jobForm").addEventListener("submit", async (e) => {
   const data = Object.fromEntries(new FormData(e.target));
   document.getElementById("status").innerText = "Posting...";
 
-  // 🔹 1. POST TO TELEGRAM (UNCHANGED)
+  // 🔹 TELEGRAM POST (UNCHANGED)
   const res = await fetch("/api/post-job", {
     method: "POST",
     headers: {
@@ -17,27 +17,60 @@ document.getElementById("jobForm").addEventListener("submit", async (e) => {
   document.getElementById("status").innerText =
     res.ok ? "Posted Successfully ✅" : "Failed ❌";
 
-  // 🔹 2. FILL IMAGE CARD (NEW)
-  document.getElementById("imgTitle").innerText = data.title;
-  document.getElementById("imgCompany").innerText = data.company;
-  document.getElementById("imgLocation").innerText = "📍 " + data.location;
-  document.getElementById("imgExperience").innerText = "🧠 " + data.experience;
-  document.getElementById("imgApply").innerText = "🔗 " + data.applyLink;
-
+  // 🔹 TEMPLATE SWITCH
   const card = document.getElementById("jobCard");
+  card.className = data.template;
+
+  // 🔹 FILL IMAGE DATA
+  imgTitle.innerText = data.title;
+  imgCompany.innerText = data.company;
+  imgLocation.innerText = "📍 " + data.location;
+  imgExperience.innerText = "🧠 " + data.experience;
+  imgApply.innerText = "🔗 " + data.applyLink;
+
   card.style.display = "block";
 
-  // 🔹 3. GENERATE IMAGE (NEW)
-  const canvas = await html2canvas(card, { scale: 2 });
+  // 🔹 IMAGE GENERATION
+  const canvas = await html2canvas(card, {
+    scale: 2,
+    width: 1080,
+    height: 1080
+  });
 
-  // 🔹 4. DOWNLOAD BUTTON (NEW)
-  const downloadBtn = document.getElementById("downloadBtn");
+  // 🔹 DOWNLOAD BUTTON
   downloadBtn.style.display = "inline-block";
-
   downloadBtn.onclick = () => {
     const link = document.createElement("a");
     link.download = "job-post.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
   };
+
+  // 🔹 AUTO CAPTION
+  const caption = `
+🚀 ${data.title}
+🏢 ${data.company}
+📍 ${data.location}
+🧠 ${data.experience}
+
+Apply here:
+${data.applyLink}
+`;
+
+  copyCaptionBtn.style.display = "inline-block";
+  copyCaptionBtn.onclick = () => {
+    navigator.clipboard.writeText(caption.trim());
+    alert("Caption copied!");
+  };
 });
+document.getElementById("logoInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById("logoPreview").src = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+

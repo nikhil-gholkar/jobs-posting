@@ -53,13 +53,29 @@ button {
   margin-top: 15px;
 }
 #jobCard {
-  width: 600px;
-  padding: 30px;
+  width: 1080px;
+  height: 1080px;
+  padding: 80px;
+  box-sizing: border-box;
+  border-radius: 24px;
+  display: none;
+  position: relative;
+}
+.template1 {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: white;
-  border-radius: 12px;
-  margin-top: 20px;
 }
+.template2 {
+  background: #ffffff;
+  color: #000000;
+  border: 6px solid #000;
+}
+#logoPreview {
+  width: 180px;
+  height: auto;
+  margin-bottom: 40px;
+}
+
 
 #jobCard h1 {
   margin-bottom: 10px;

@@ -3,6 +3,8 @@
 <head>
   <title>Telegram Job Poster</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 </head>
 <body>
 
@@ -21,6 +23,19 @@
 
 <p id="status"></p>
 </div>
+<hr />
+
+<!-- Image Card -->
+<div id="jobCard" style="display:none">
+  <h1 id="imgTitle"></h1>
+  <h3 id="imgCompany"></h3>
+  <p id="imgLocation"></p>
+  <p id="imgExperience"></p>
+  <p id="imgApply"></p>
+</div>
+
+<button id="downloadBtn" style="display:none">Download Image</button>
+
 
 <script src="script.js"></script>
 </body>

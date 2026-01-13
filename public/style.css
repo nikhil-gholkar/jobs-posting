@@ -52,3 +52,20 @@ button {
 #status {
   margin-top: 15px;
 }
+#jobCard {
+  width: 600px;
+  padding: 30px;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+#jobCard h1 {
+  margin-bottom: 10px;
+}
+
+#jobCard p {
+  font-size: 16px;
+}
+

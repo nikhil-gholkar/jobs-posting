@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/post-job.js": {
+      "maxDuration": 15
+    }
+  }
+}

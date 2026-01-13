@@ -33,8 +33,8 @@ document.getElementById("jobForm").addEventListener("submit", async (e) => {
   // 🔹 IMAGE GENERATION
   const canvas = await html2canvas(card, {
     scale: 2,
-    width: 800,
-    height: 800
+    width: 1080,
+    height: 1080
   });
 
   // 🔹 DOWNLOAD BUTTON

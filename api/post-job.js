@@ -1,69 +1,39 @@
 import axios from "axios";
-import { ImageResponse } from "@vercel/og";
 
-export const config = { runtime: "edge" };
-
-
-export default async function handler(req) {
-  if (req.headers.get("x-admin-key") !== process.env.ADMIN_KEY) {
-    return new Response("Unauthorized", { status: 401 });
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).end();
   }
 
-  const job = await req.json();
+  if (req.headers["x-admin-key"] !== process.env.ADMIN_KEY) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
-  // --- Generate Image ---
-  const image = new ImageResponse(
-    (
-      <div
-        style={{
-          width: "1080px",
-          height: "1080px",
-          background: "#020617",
-          color: "white",
-          padding: "80px",
-          fontSize: "48px",
-          display: "flex",
-          flexDirection: "column"
-        }}
-      >
-        <strong style={{ color: "#22c55e", fontSize: 64 }}>
-          WE'RE HIRING
-        </strong>
+  const job = req.body;
 
-        <div style={{ marginTop: 40 }}>{job.title}</div>
-        <div style={{ marginTop: 20 }}>🏢 {job.company}</div>
-        <div>📍 {job.location}</div>
-        <div>🧑‍💻 {job.experience}</div>
-      </div>
-    ),
-    { width: 1080, height: 1080 }
-  );
-
-  const imageBuffer = Buffer.from(await image.arrayBuffer());
-
-  // --- Telegram ---
-  const caption = `
+  const text = `
 🚀 ${job.title}
 
-🏢 ${job.company}
-📍 ${job.location}
-🧑‍💻 ${job.experience}
+🏢 Company: ${job.company}
+📍 Location: ${job.location}
+🧑‍💻 Experience: ${job.experience}
 
-🔗 Apply:
+🔗 Apply here:
 ${job.applyLink}
 `;
 
-  const form = new FormData();
-  form.append("chat_id", process.env.TG_CHANNEL);
-  form.append("caption", caption);
-  form.append("photo", new Blob([imageBuffer]), "job.png");
+  try {
+    await axios.post(
+      `https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendMessage`,
+      {
+        chat_id: process.env.TG_CHANNEL,
+        text
+      }
+    );
 
-  await axios.post(
-    `https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendPhoto`,
-    form
-  );
-
-  return new Response(JSON.stringify({ success: true }), {
-    headers: { "Content-Type": "application/json" }
-  });
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Telegram failed" });
+  }
 }

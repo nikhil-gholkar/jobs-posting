@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/post-job.js": {
-      "maxDuration": 15
+      "runtime": "edge"
     }
   }
 }

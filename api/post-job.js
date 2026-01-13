@@ -1,53 +1,46 @@
 import axios from "axios";
-import { createCanvas } from "canvas";
-import FormData from "form-data";
+import { ImageResponse } from "@vercel/og";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
-  if (req.headers["x-admin-key"] !== process.env.ADMIN_KEY)
-    return res.status(401).end();
+export const config = { runtime: "edge" };
 
-  const job = req.body;
-
-  try {
-    const imageBuffer = generateImage(job);
-    await sendToTelegram(job, imageBuffer);
-    res.json({ success: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Telegram post failed" });
+export default async function handler(req) {
+  if (req.headers.get("x-admin-key") !== process.env.ADMIN_KEY) {
+    return new Response("Unauthorized", { status: 401 });
   }
-}
 
-/* -------- IMAGE GENERATION -------- */
-function generateImage(job) {
-  const canvas = createCanvas(1080, 1080);
-  const ctx = canvas.getContext("2d");
+  const job = await req.json();
 
-  ctx.fillStyle = "#020617";
-  ctx.fillRect(0, 0, 1080, 1080);
+  // --- Generate Image ---
+  const image = new ImageResponse(
+    (
+      <div
+        style={{
+          width: "1080px",
+          height: "1080px",
+          background: "#020617",
+          color: "white",
+          padding: "80px",
+          fontSize: "48px",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        <strong style={{ color: "#22c55e", fontSize: 64 }}>
+          WE'RE HIRING
+        </strong>
 
-  ctx.fillStyle = "#22c55e";
-  ctx.font = "bold 64px Arial";
-  ctx.fillText("WE'RE HIRING", 80, 140);
+        <div style={{ marginTop: 40 }}>{job.title}</div>
+        <div style={{ marginTop: 20 }}>🏢 {job.company}</div>
+        <div>📍 {job.location}</div>
+        <div>🧑‍💻 {job.experience}</div>
+      </div>
+    ),
+    { width: 1080, height: 1080 }
+  );
 
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 56px Arial";
-  ctx.fillText(job.title, 80, 280);
+  const imageBuffer = Buffer.from(await image.arrayBuffer());
 
-  ctx.font = "40px Arial";
-  ctx.fillText(`Company: ${job.company}`, 80, 380);
-  ctx.fillText(`Location: ${job.location}`, 80, 450);
-  ctx.fillText(`Experience: ${job.experience}`, 80, 520);
-
-  ctx.font = "32px Arial";
-  ctx.fillText("Apply link in caption", 80, 650);
-
-  return canvas.toBuffer("image/png");
-}
-
-/* -------- TELEGRAM POST -------- */
-async function sendToTelegram(job, imageBuffer) {
+  // --- Telegram ---
   const caption = `
 🚀 ${job.title}
 
@@ -55,18 +48,21 @@ async function sendToTelegram(job, imageBuffer) {
 📍 ${job.location}
 🧑‍💻 ${job.experience}
 
-🔗 Apply here:
+🔗 Apply:
 ${job.applyLink}
-  `;
+`;
 
   const form = new FormData();
   form.append("chat_id", process.env.TG_CHANNEL);
   form.append("caption", caption);
-  form.append("photo", imageBuffer, "job.png");
+  form.append("photo", new Blob([imageBuffer]), "job.png");
 
   await axios.post(
     `https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendPhoto`,
-    form,
-    { headers: form.getHeaders() }
+    form
   );
+
+  return new Response(JSON.stringify({ success: true }), {
+    headers: { "Content-Type": "application/json" }
+  });
 }

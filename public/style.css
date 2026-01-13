@@ -1,45 +1,45 @@
+/* =========================
+   BASE
+========================= */
+
 body {
   background: #020617;
   color: #ffffff;
   font-family: Arial, sans-serif;
-  padding: 40px;
+  padding: 24px;
 }
-
-@media (max-width: 768px) {
-  body {
-    padding: 20px;
-  }
-
-  form {
-    width: 100%;
-  }
-}
-.container{
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}   
 
 h2 {
+  text-align: center;
   margin-bottom: 20px;
 }
 
-form {
-  width: 500px;
+/* =========================
+   FORM
+========================= */
+
+.container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  max-width: 100%;
+  margin-bottom: 40px;
 }
 
-input, button {
+form {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
+  font-size: 16px;
 }
 
 button {
@@ -50,38 +50,146 @@ button {
 }
 
 #status {
-  margin-top: 15px;
+  text-align: center;
+  margin-top: 10px;
 }
+
+/* =========================
+   PREVIEW AREA
+========================= */
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   JOB CARD (1080x1080 REAL SIZE)
+========================= */
+
 #jobCard {
   width: 1080px;
   height: 1080px;
-  padding: 80px;
+  padding: 80px 60px;
   box-sizing: border-box;
-  border-radius: 24px;
-  display: none;
-  position: relative;
-}
-.template1 {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
-}
-.template2 {
-  background: #ffffff;
-  color: #000000;
-  border: 6px solid #000;
-}
-#logoPreview {
-  width: 180px;
-  height: auto;
-  margin-bottom: 40px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  overflow: hidden;
 }
 
+/* =========================
+   TEMPLATES
+========================= */
+
+.template1 {
+  background: linear-gradient(135deg, #0e1018 0%, #08040c 100%);
+  color: #ffffff;
+}
+
+.template2 {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #1a1a1a;
+}
+
+.template2 p {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+#logoPreview {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.template2 #logoPreview {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   TEXT
+========================= */
 
 #jobCard h1 {
-  margin-bottom: 10px;
+  font-size: 60px;
+  font-weight: 500;
+  margin: 0 0 25px 0;
+  line-height: 1.15;
+  letter-spacing: -2px;
+  max-width: 900px;
+  word-break: break-word;
+}
+
+#jobCard h3 {
+  margin-top: 40px;
+  font-size: 38px;
+  font-weight: 500;
+  opacity: 0.95;
 }
 
 #jobCard p {
-  font-size: 16px;
+  margin: 0 0 22px 0;
+  font-size: 34px;
+  font-weight: 500;
+  opacity: 0.95;
 }
 
+/* =========================
+   DETAILS
+========================= */
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   APPLY BUTTON
+========================= */
+
+#imgApply {
+  margin: 40px auto 0;
+  padding: 28px 50px;
+
+  width: 700px;
+  max-width: 90%;
+
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.template2 #imgApply {
+  background: rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+}

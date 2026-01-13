@@ -15,11 +15,16 @@ export default async function handler(req, res) {
 🚀 ${job.title}
 
 🏢 Company: ${job.company}
+🎓 Qualification: ${job.quali}
+💵 CTC: ${job.ctc}
 📍 Location: ${job.location}
 🧑‍💻 Experience: ${job.experience}
 
 🔗 Apply here:
 ${job.applyLink}
+
+Join @jobs_dekhho for more job updates
+
 `;
 
   try {

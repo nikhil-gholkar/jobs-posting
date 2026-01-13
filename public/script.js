@@ -22,11 +22,11 @@ document.getElementById("jobForm").addEventListener("submit", async (e) => {
   card.className = data.template;
 
   // 🔹 FILL IMAGE DATA
-  imgTitle.innerText = data.title;
-  imgCompany.innerText = data.company;
-  imgLocation.innerText = "📍 " + data.location;
-  imgExperience.innerText = "🧠 " + data.experience;
-  imgApply.innerText = "🔗 " + data.applyLink;
+  imgTitle.innerText = `Job Role- ${data.title}`;
+  imgCompany.innerText = `Company Name- ${data.company}`;
+  imgLocation.innerText = "📍 " +"Location- "+ data.location;
+  imgExperience.innerText = "🧠 " +"experience- " + data.experience;
+  // imgApply.innerText = "🔗 " + data.applyLink;
 
   card.style.display = "block";
 
@@ -47,14 +47,14 @@ document.getElementById("jobForm").addEventListener("submit", async (e) => {
   };
 
   // 🔹 AUTO CAPTION
-  const caption = `
-🚀 ${data.title}
-🏢 ${data.company}
-📍 ${data.location}
-🧠 ${data.experience}
-
-Apply here:
-${data.applyLink}
+  const caption = ` Follow @jobs.dekhho for more job updates
+opening for ${data.title} in ${data.company} Apply here link in bio
+.
+.
+.
+.
+[itjobs, techjobs, softwarejobs, hiringnow, jobopening, 
+developerjobs, freshersjobs, engineeringjobs, techcareers, careeropportunities]
 `;
 
   copyCaptionBtn.style.display = "inline-block";

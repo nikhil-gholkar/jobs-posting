@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Telegram Job Poster</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -15,6 +18,8 @@
 <form id="jobForm">
   <input name="title" placeholder="Job Title" required />
   <input name="company" placeholder="Company Name" required />
+   <input name="quali" placeholder="Qualification" required />
+    <input name="ctc" placeholder="CTC" required />
   <input name="location" placeholder="Location" required />
   <input name="experience" placeholder="Experience" required />
   <input name="applyLink" placeholder="Apply Link" required />
@@ -33,19 +38,28 @@
 <hr />
 
 <!-- Image Card -->
+ <div class="box">
+  <div class="preview-wrapper">
 <div id="jobCard" class="template1">
-  <img id="logoPreview" />
-  <h1 id="imgTitle"></h1>
-  <h3 id="imgCompany"></h3>
-  <p id="imgLocation"></p>
-  <p id="imgExperience"></p>
-  <p id="imgApply"></p>
+  <img id="logoPreview" src=""/>
+  <h1 id="imgTitle">👏🏻Job Role- Software Engineer</h1>
+  <div class="details">
+  <h3 id="imgCompany">🏢 Company Name- VOIS</h3>
+  <p id="qualification">🎓 Qualification- Btech</p>
+  <p id="CTC">💵 CTC- 10LPA</p>
+  <p id="imgLocation">📍 Location- Pune</p>
+  <p id="imgExperience">⚡ Experience- 2 Years</p>
+ 
+  </div>
+   <div id="imgApply">🔗 Apply Link in BIO</div>
+   <p style="font-weight: 300; opacity: 0.4; margin-top: 25px;">Follow @jobs.dekhho for more job updates</p>
+</div>
 </div>
 
-<button id="downloadBtn" style="display:none">Download Image</button>
+<button id="downloadBtn" style="display:none; margin-bottom: 20px;">Download Image</button>
 <button id="copyCaptionBtn" style="display:none">Copy Caption</button>
 
-
+</div>
 
 <script src="script.js"></script>
 </body>
